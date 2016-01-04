@@ -1,0 +1,67 @@
+body {
+	background-color: #CACBCC;
+	background-image: url('/img/industry-300px.png');
+	opacity: 10%;
+	background-repeat: no-repeat;
+	background-position: right center /*100% 50%*/;
+	margin: 0;
+	padding: 10px;
+	font: 0.85em/1.3 "Lucida Grande", "Lucida Sans Unicode","Lucida Sans", Verdana, Tahoma, sans-serif;
+}
+
+.menu {
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+	/*background-color: #787878;*/
+}
+
+.menu ul li {
+	list-style-type: none;
+	display: inline;
+
+}
+
+.menu li a {
+	display: block;
+	text-decoration: none;
+	border-right: 2px solid #FFFFFF;
+	/*border-left: 2px solid #FFFFFF;*/
+	padding: 3px 10px;
+	float: left;
+	color: #000000;
+	margin-right: 10px;
+	/*margin-left: 5px;*/
+	/*border: solid 1px;*/
+
+/*
+	-webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    color: initial;
+    font: 110% Arial, Helvetica, sans-serif;*/
+}
+
+.menu li a:hover{
+	background-color: #CCCCCC;
+}
+
+
+@media print {
+	html {
+		display: table;
+		margin: auto;
+	}
+	body {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	a {
+		display: none !important;
+	}
+
+	.database th, .database tr, .database td {
+		border: 1px solid #000;
+	}
+}
