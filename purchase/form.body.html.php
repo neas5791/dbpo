@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset <?php if (!$addDetail) echo 'disabled'; ?>>
   <form method="POST">
   	<table class="purchase_add_edit" oninput="linetotal.value = parseInt(qty.value) * parseFloat(price.value)" >
   		<caption>Purchase order details:</caption>

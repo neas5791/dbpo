@@ -17,8 +17,14 @@
 		$comment = errorMessage($_GET['invalid']);
 	}
 
+	if (isset($_POST['detail'])) {
+			$error = 'Add Detail executed.';
+			include $_SERVER['DOCUMENT_ROOT'].'/includes/error.html.php';
+			exit();
+	}
+
 	// launch add form
-	if (isset($_POST['add'])) {
+	if (isset($_GET['add'])) {
 
 		include $_SERVER['DOCUMENT_ROOT'].'/includes/db.inc.php';
 
@@ -28,6 +34,7 @@
 		$po_number = '';
 		$po_date = date('d-m-Y');
 		$button = 'New order';
+		$addDetail = FALSE;
 		$reading = array('id' => '', 'line' => '', 'job' => '','partnumber' => '', 'qty' => '', 'price' => '', 'status' => '' );
 
 		try {

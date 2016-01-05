@@ -73,7 +73,7 @@
         </table>
       </div>
       <div class="controls">
-        <input type="submit" name="add" value="Add">
+        <input type="submit" name="add" value="Add" formaction="?add">
         <input type="submit" name="edit" value="Edit">
         <input type="submit" name="delete" value="Delete">
       </div>
