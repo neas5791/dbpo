@@ -246,7 +246,7 @@
 					WHERE id = :id;';
 			$s = $pdo -> prepare($sql);
 			$s -> bindValue(':id',$_POST['id']);
-			$s -> bindValue(':company', text($_POST['company'], 't'));
+			$s -> bindValue(':company', text($_POST['company'], 'u'));
 			$s -> bindValue(':contact', text($_POST['contact'], 't'));
 			$s -> bindValue(':address1', text( $address1, 't' ));
 			$s -> bindValue(':address2', text( $address2, 't' ));
