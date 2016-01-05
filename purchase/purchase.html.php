@@ -39,13 +39,6 @@
             <th scope="col">Date</th>
             <th scope="col">Purchase Order</th>
             <th scope="col">Supplier</th>
-
-            <!-- <th scope="col">Line</th>
-            <th scope="col">Job No</th>
-            <th scope="col">Part Number</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Unit Price</th>
-            <th scope="col">Line Total</th> -->
             <th scope="col">Status</th>
           </tr>
 
@@ -55,12 +48,6 @@
               <td><?php echo $reading['po_date']; ?></td>
               <td><?php echo $reading['po_number']; ?></td>
               <td><?php echo $reading['company']; ?></td>
-<!--               <td class="select"><?php echo $reading['line']; ?></td>
-              <td class="select"><?php echo $reading['job']; ?></td>
-              <td><?php echo $reading['partnumber']; ?></td>
-              <td><?php echo $reading['qty']; ?></td>
-              <td><?php echo $reading['price']; ?></td>
-              <td><?php echo $reading['cost']; ?></td> -->
               <td class="select">
                 <?php if ($reading['active']) : ?>
                   <?php echo 'OPEN'; ?>
