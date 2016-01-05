@@ -21,7 +21,7 @@
           <input name="job" id="jab" value="<?php echo $reading['job']; ?>"</td>
         <td>
           <select name="partnumber" id="partnumber">
-            <!-- <option value=""></option> -->
+            <option value="" selected></option>
               <?php foreach ($partnumbers as $partnumber): ?>
                 <option value="<?php htmlout($partnumber['id']); ?>"><?php htmlout($partnumber['partnumber']); ?></option>
               <?php endforeach; ?>

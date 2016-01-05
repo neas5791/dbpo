@@ -3,6 +3,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
+	date_default_timezone_set('UTC');
 ?>
 
 <!-- https://github.com/spbooks/PHPMYSQL5/blob/master/chapter4/listjokes/jokes.html.php -->
@@ -25,7 +26,7 @@
 		$action = 'addform';
 		$id = '';
 		$po_number = '';
-		$po_date = '';
+		$po_date = date('d-m-Y');
 		$button = 'New order';
 
 		$reading = array('id' => '', 'line' => '', 'job' => '','partnumber' => '', 'qty' => '', 'price' => '', 'status' => '' );

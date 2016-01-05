@@ -57,6 +57,7 @@ CREATE TABLE tbPurchaseLine
 	purchaseid		INT NOT NULL,
 	line			INT NOT NULL,
 	partid 			INT,
+	notes			TEXT,
 	qty				INT,
 	job 			VARCHAR(8),
 	price 			DECIMAL(14,2),

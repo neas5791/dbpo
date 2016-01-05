@@ -63,7 +63,7 @@
               <td><?php echo $reading['cost']; ?></td> -->
               <td class="select">
                 <?php if ($reading['active']) : ?>
-                  <?php echo 'ACTIVE'; ?>
+                  <?php echo 'OPEN'; ?>
                 <?php else : ?>
                   <?php echo 'CLOSED'; ?>
                 <?php endif; ?>
