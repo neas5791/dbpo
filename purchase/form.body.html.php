@@ -35,7 +35,13 @@
         <td>
           <input name="linetotal" id="linetotal"></td>
         <td>
-          <input name="status" id="status" value="<?php echo $reading['status'];?>"></td>
+          <select name="status" id="status">
+            <option value="" selected></option>
+              <?php foreach ($stats as $status): ?>
+                <option value="<?php htmlout($status['id']); ?>"><?php htmlout($status['status']); ?></option>
+              <?php endforeach; ?>
+          </select>
+<!--           <input name="status" id="status" value="<?php echo $reading['status'];?>"></td> -->
       </tr>
   	</table>
   </form>

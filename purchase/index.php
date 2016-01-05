@@ -28,19 +28,12 @@
 		$po_number = '';
 		$po_date = date('d-m-Y');
 		$button = 'New order';
-
 		$reading = array('id' => '', 'line' => '', 'job' => '','partnumber' => '', 'qty' => '', 'price' => '', 'status' => '' );
-
-		// print_r($reading);
-		// exit();
-		// 	$error = echo $reading['line'];
-		// 	include $_SERVER['DOCUMENT_ROOT'].'/includes/error.html.php';
-		// 	exit();
-
 
 		try {
 			$supplier_results = $pdo->query("SELECT id, company FROM tbSupplier");
 			$partnumber_results = $pdo->query("SELECT id, partnumber FROM tbPart ORDER BY partnumber");
+			$status_results = $pdo -> query("SELECT id, status FROM tbStatus ORDER BY status");
 		}
 		catch (PDOException $e) {
 			$error = 'Error fetching supplier list.';
@@ -51,13 +44,19 @@
 		foreach ($supplier_results as $row){
 			$suppliers [] = array(
 					'id' => $row['id'],
-					'company' => $row['company']); 
+					'company' => $row['company'] ); 
 		}
 		
 		foreach ($partnumber_results as $row){
 			$partnumbers [] = array(
 					'id' => $row['id'],
-					'partnumber' => $row['partnumber']); 
+					'partnumber' => $row['partnumber'] ); 
+		}
+
+		foreach ($status_results as $row ) {
+			$stats [] = array(
+				'id' => $row['id'],
+				'status' => $row['status'] );
 		}
 
 		include $_SERVER['DOCUMENT_ROOT'] . '/' . $thispage . '/form.html.php';
@@ -334,7 +333,7 @@
 				FROM tbPurchaseOrder
 				JOIN tbSupplier 
 				ON tbPurchaseOrder.supplierid = tbSupplier.id
-				ORDER BY tbPurchaseOrder.po_date DESC
+				ORDER BY tbPurchaseOrder.po_date DESC, tbPurchaseOrder.po_number DESC
 				LIMIT :offset, :rec_limit;';
 		$output =  $sql;
 		$s = $pdo -> prepare($sql);

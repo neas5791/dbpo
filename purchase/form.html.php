@@ -20,7 +20,7 @@
 					echo '<h2 style="color:red"> <b>ARE YOU SURE YOU WANT TO DELETE THIS RECORD?</b></h2>';
 				}
 			?>
-			<fieldset disabled>
+			<fieldset>
 				<form name="purchaseOrder" method="POST">
 					<div><label for="po_date">Date</label>
 					<input type="text" name="po_date" id="po_date" value="<?php echo $po_date; ?>"/>

@@ -130,10 +130,11 @@ form input {
 
 .purchase_add_edit input{
 	float: left;
-	width: auto;
+	width: 75px;
 	margin-bottom: 5px;
 	border-radius: 5px;
 	text-indent: 5px;
+	text-align: right;
 }
 
 form input[type="submit"] {
