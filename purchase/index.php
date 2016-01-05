@@ -279,18 +279,6 @@
 		include $_SERVER['DOCUMENT_ROOT'] .
 			'/includes/db.inc.php';
 
-		try {
-			$results = $pdo -> query('SELECT COUNT(partnumber) FROM tbPart');
-
-			print_r($results);
-			exit();
-		}
-		catch (PDOException $e) {
-			$error = 'Error counting part results.<br>' . $e -> getMessage();
-			include $_SERVER['DOCUMENT_ROOT'] .
-				'/includes/error.html.php';
-			exit();
-		}
 		// $sql = 'SELECT 
 		// 					tbPurchaseOrder.po_date, 
 		// 					tbPurchaseOrder.po_number,

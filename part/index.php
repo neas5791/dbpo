@@ -2,8 +2,9 @@
 <!-- https://github.com/spbooks/PHPMYSQL5/blob/master/chapter4/listjokes/jokes.html.php -->
 <?php
 	$comment = '';
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
+	
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'on');
 
 	include_once $_SERVER['DOCUMENT_ROOT'].
 		'/includes/magicquote.inc.php';
@@ -316,12 +317,16 @@ ini_set('display_errors', 'on');
 
 	include $_SERVER['DOCUMENT_ROOT'] .
 			'/includes/db.inc.php';
-
+	
+	// ****************  Pagination ********************************//
+	$rec_limit = 25; // number records to display on page
 	try {
-		$results = $pdo -> query('SELECT COUNT(partnumber) FROM tbPart');
-
-		print_r($results[0]);
-		exit();
+		// number of records in table
+		$sql = 'SELECT COUNT(partnumber) FROM tbPart WHERE active';
+		
+		$s = $pdo ->prepare($sql);
+		$s -> execute();
+		$recval = $s -> fetch();
 	}
 	catch (PDOException $e) {
 		$error = 'Error counting part results.<br>' . $e -> getMessage();
@@ -329,6 +334,36 @@ ini_set('display_errors', 'on');
 			'/includes/error.html.php';
 		exit();
 	}
+	$rec_count = $recval[0];
+
+	// check that the table contains records
+	if($rec_count == 0) { 
+		$error = 'No valid data in table.<br>'.$sql;
+		include $_SERVER['DOCUMENT_ROOT'] .
+			'/includes/error.html.php';
+		exit();	
+	}
+
+	if( isset($_GET['page'] ) ) {
+		
+		if ( $_GET['page'] < ($rec_count / $rec_limit)-1 )
+			$page = $_GET['page'] + 1;
+		else
+			$page = $_GET['page'];
+
+		$offset = $rec_limit * $page ;
+  }
+	else {
+    $page = 0;
+    $offset = 0;
+  }
+
+  $left_rec = $rec_count - ($page * $rec_limit);
+
+  // echo $page.' - '.$offset;
+  // exit();
+
+
 	try {
 		$sql = 'SELECT 
 					tbPart.id, 
@@ -339,13 +374,18 @@ ini_set('display_errors', 'on');
 				FROM tbPart 
 				INNER JOIN tbType 
 				ON tbPart.typeid = tbType.id
-				WHERE tbPart.active;';
+				WHERE tbPart.active
+				ORDER BY tbPart.id
+				LIMIT :offset, :rec_limit;';
 		$s = $pdo -> prepare($sql);
+		$s -> bindValue(':offset', $offset,PDO::PARAM_INT);
+		$s -> bindValue(':rec_limit', $rec_limit, PDO::PARAM_INT);
 		$s -> execute();
 		$result = $s -> fetchAll();
 	}
 	catch (PDOException $e) {
-		$error = 'Error fecthing part detail results with the following comment:<br>' . $e->getMessage();
+		$error = 'Error fecthing part detail results with the following comment:<br>' . 
+							$e->getMessage().'<br><br>'.$sql;
 		include $_SERVER['DOCUMENT_ROOT'] .
 			'/includes/error.html.php';
 		exit();
