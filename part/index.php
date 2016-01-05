@@ -360,10 +360,6 @@
 
   $left_rec = $rec_count - ($page * $rec_limit);
 
-  // echo $page.' - '.$offset;
-  // exit();
-
-
 	try {
 		$sql = 'SELECT 
 					tbPart.id, 

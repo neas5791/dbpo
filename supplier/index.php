@@ -300,17 +300,77 @@
 		
 		exit();		
 	}
-	// Populate the list with server data
-	try {
-		include $_SERVER['DOCUMENT_ROOT'] .
+
+	// ****************  Pagination ********************************//
+	// http://www.tutorialspoint.com/php/mysql_paging_php.htm ******//
+	include $_SERVER['DOCUMENT_ROOT'] .
 			'/includes/db.inc.php';
 
-		$sql = 'SELECT id, company, contact, address1, 
-						address2, city, state, postcode, 
-						country, mobile, phone, fax, email, 
-						www FROM tbSupplier;';
-		$output =  $sql;
+	$rec_limit = 25; // number records to display on page
+	
+	try {
+		// number of records in table
+		$sql = 'SELECT COUNT(company) FROM tbSupplier WHERE active';
+		$s = $pdo ->prepare($sql);
+		$s -> execute();
+		$recval = $s -> fetch();
+	}
+	catch (PDOException $e) {
+		$error = 'Error counting part results.<br>' . $e -> getMessage();
+		include $_SERVER['DOCUMENT_ROOT'] .
+			'/includes/error.html.php';
+		exit();
+	}
+	$rec_count = $recval[0];
+
+	// check that the table contains records
+	if($rec_count == 0) { 
+		$error = 'No valid data in table.<br>'.$sql;
+		include $_SERVER['DOCUMENT_ROOT'] .
+			'/includes/error.html.php';
+		exit();	
+	}
+
+	if( isset($_GET['page'] ) ) {
+		
+		if ( $_GET['page'] < ($rec_count / $rec_limit)-1 )
+			$page = $_GET['page'] + 1;
+		else
+			$page = $_GET['page'];
+
+		$offset = $rec_limit * $page ;
+  }
+	else {
+    $page = 0;
+    $offset = 0;
+  }
+
+  $left_rec = $rec_count - ($page * $rec_limit);
+
+	// Populate the list with server data
+	try {
+		$sql = 'SELECT 
+							tbSupplier.id, 
+							tbSupplier.company, 
+							tbSupplier.contact, 
+							tbSupplier.address1, 
+							tbSupplier.address2, 
+							tbSupplier.city, 
+							tbSupplier.state, 
+							tbSupplier.postcode, 
+							tbSupplier.country, 
+							tbSupplier.mobile, 
+							tbSupplier.phone, 
+							tbSupplier.fax, 
+							tbSupplier.email, 
+							tbSupplier.www 
+						FROM tbSupplier
+						WHERE active
+						ORDER BY company
+						LIMIT :offset, :rec_limit;';
 		$s = $pdo -> prepare($sql);
+		$s -> bindValue(':offset', $offset,PDO::PARAM_INT);
+		$s -> bindValue(':rec_limit', $rec_limit, PDO::PARAM_INT);
 		$s -> execute();
 		$result = $s -> fetchAll();
 	}
