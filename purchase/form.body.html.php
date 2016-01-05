@@ -18,7 +18,7 @@
         <td class="select"> 
           <input name="line" id="line" value="<?php echo $reading['line']; ?>"></td>
         <td class="select"> 
-          <input name="job" id="jab" value="<?php echo $reading['job']; ?>"</td>
+          <input name="job" id="jab" value="<?php echo $reading['job']; ?>"></td>
         <td>
           <select name="partnumber" id="partnumber">
             <option value="" selected></option>
@@ -41,7 +41,7 @@
                 <option value="<?php htmlout($status['id']); ?>"><?php htmlout($status['status']); ?></option>
               <?php endforeach; ?>
           </select>
-<!--           <input name="status" id="status" value="<?php echo $reading['status'];?>"></td> -->
+        </td>
       </tr>
   	</table>
   </form>
