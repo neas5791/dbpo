@@ -9,8 +9,8 @@
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/navigation.inc.php'; ?>
 	</nav>  
   <body>
-    <p>
+    <div id="error"><p><b>
       <?php echo $error; ?>
-    </p>
+    </b></p></div>
   </body>
 </html>
