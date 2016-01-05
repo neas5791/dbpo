@@ -25,7 +25,7 @@
 	if (isset($_POST['edit'])){
 		// check that there is a selection
 		if ($_POST['select'] == 0) {
-			header('Location: ./');
+			header('Location: ./?invalid=3');
 			exit();
 		}
 
