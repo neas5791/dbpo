@@ -39,7 +39,7 @@
 				</div>
 				<div>
 					<label for="type">Type:</label>
-					<select name="type" id="type">
+					<select name="type" id="type" <?php if($action == 'deleteform') { echo "disabled";};?>>
 						<option value="0"></option>
 						<?php foreach ($types as $type): ?>
 							<option name="type" value="<?php htmlout($type['id']); ?>" <?php if ($type['id'] == $typeid) {echo 'selected="selected"';} ?>><?php htmlout($type['type']);?></option>

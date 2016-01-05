@@ -17,7 +17,7 @@
 	// launch add form
 	if (isset($_POST['add'])) {
 
-		// lsit product types for combo box
+		// list product types for combo box
 		try {
 			include $_SERVER['DOCUMENT_ROOT'] .
 				'/includes/db.inc.php';
@@ -116,6 +116,11 @@
 	}
 	// launch delete form
 	if (isset($_POST['delete'])){
+		// check that there is a selection
+		if ($_POST['select'] == 0) {
+			header('Location: ./?invalid=3');
+			exit();
+		}
 
 		include $_SERVER['DOCUMENT_ROOT'] . '/includes/db.inc.php'; 
 
@@ -134,7 +139,7 @@
 			$description = $row['description'];
 			$drawingnumber = $row['drawingnumber'];
 			$typeid = $row['typeid'];
-			$button = 'DELETE!';
+			$button = 'Delete';
 
 		}
 		catch (PDOException $e) {
