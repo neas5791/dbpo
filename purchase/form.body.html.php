@@ -44,5 +44,14 @@
         </td>
       </tr>
   	</table>
+    <div class="message">
+        <p style="color:red">
+          <b>
+            <?php
+              echo $comment; 
+            ?>
+          </b>
+       </p>
+    </div>
   </form>
 </fieldset>

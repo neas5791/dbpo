@@ -3,7 +3,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
-	date_default_timezone_set('UTC');
+	date_default_timezone_set('Australia/Sydney');
 ?>
 
 <!-- https://github.com/spbooks/PHPMYSQL5/blob/master/chapter4/listjokes/jokes.html.php -->
@@ -12,12 +12,26 @@
 		'/includes/magicquote.inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'].
 		'/includes/helper.inc.php';
+
 	// output messages to html
 	if (isset($_GET['invalid'])){
 		$comment = errorMessage($_GET['invalid']);
 	}
 
 	if (isset($_POST['detail'])) {
+		if ($_POST['po_number'] == '' || $_POST['supplier'] == '') {
+				header('Location: ./?add=1&invalid=4&po_number='.$_POST['po_number']
+					.'&supplier='.$_POST['supplier'].'&po_date='.$_POST['po_date'] );
+				exit();
+		}
+
+		// validate data prior to submission
+		if( !isset($_POST['po_number']) && !isset($_POST['supplier'])){
+			$error = 'not enough details.';
+			include $_SERVER['DOCUMENT_ROOT'].'/includes/error.html.php';
+			exit();
+		}
+
 			$error = 'Add Detail executed.';
 			include $_SERVER['DOCUMENT_ROOT'].'/includes/error.html.php';
 			exit();
@@ -31,16 +45,28 @@
 		$pagetitle = 'New Order';
 		$action = 'addform';
 		$id = '';
-		$po_number = '';
-		$po_date = date('d-m-Y');
+		
+		if (isset($_GET['invalid'])) {
+			$po_number = $_GET['po_number'];
+			$po_date = $_GET['po_date'];
+
+			if ($_GET['supplier']	=='')
+				$sup = 0;
+			else
+				$sup = $_GET['supplier'];
+		}
+		else {
+			$po_number = '';
+			$po_date = date('d-m-Y');
+			$sup = 0;
+		}
+
 		$button = 'New order';
-		$addDetail = FALSE;
-		$reading = array('id' => '', 'line' => '', 'job' => '','partnumber' => '', 'qty' => '', 'price' => '', 'status' => '' );
 
 		try {
 			$supplier_results = $pdo->query("SELECT id, company FROM tbSupplier");
-			$partnumber_results = $pdo->query("SELECT id, partnumber FROM tbPart ORDER BY partnumber");
-			$status_results = $pdo -> query("SELECT id, status FROM tbStatus ORDER BY status");
+			// $partnumber_results = $pdo->query("SELECT id, partnumber FROM tbPart ORDER BY partnumber");
+			// $status_results = $pdo -> query("SELECT id, status FROM tbStatus ORDER BY status");
 		}
 		catch (PDOException $e) {
 			$error = 'Error fetching supplier list.';
@@ -54,17 +80,17 @@
 					'company' => $row['company'] ); 
 		}
 		
-		foreach ($partnumber_results as $row){
-			$partnumbers [] = array(
-					'id' => $row['id'],
-					'partnumber' => $row['partnumber'] ); 
-		}
+		// foreach ($partnumber_results as $row){
+		// 	$partnumbers [] = array(
+		// 			'id' => $row['id'],
+		// 			'partnumber' => $row['partnumber'] ); 
+		// }
 
-		foreach ($status_results as $row ) {
-			$stats [] = array(
-				'id' => $row['id'],
-				'status' => $row['status'] );
-		}
+		// foreach ($status_results as $row ) {
+		// 	$stats [] = array(
+		// 		'id' => $row['id'],
+		// 		'status' => $row['status'] );
+		// }
 
 		include $_SERVER['DOCUMENT_ROOT'] . '/' . $thispage . '/form.html.php';
 		exit();

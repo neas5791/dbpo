@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <title><?php htmlout($pagetitle);?></title>
-    <link rel="stylesheet" type="text/css" href="../style_v20.css"></li>
+    <link rel="stylesheet" type="text/css" href="../style_v21.css"></li>
     <nav>
         <?php include $_SERVER['DOCUMENT_ROOT'].'/includes/navigation.inc.php'; ?>
     </nav>
