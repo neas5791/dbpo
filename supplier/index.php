@@ -134,14 +134,13 @@
 		include $_SERVER['DOCUMENT_ROOT'] .
 			'/includes/db.inc.php';
 
-		if ( ($_POST['company'] == null) || ($_POST['contact'] == null) ){
+		if ( ($_POST['company'] == null) && ($_POST['contact'] == null) ){
 			header('Location: ./');
 			exit();
 		}
 
 		// Split the address text area at crlf using regex
 		$address = preg_split("/\r\n|[\r\n]/",$_POST['address']);
-		
 
 		// $address1 = $address[0];
 
@@ -156,6 +155,9 @@
 
 		// loosely check if company already exists
 		// code here
+
+		
+
 
 		// run insert query
 		try {
@@ -281,8 +283,11 @@
 			'/includes/db.inc.php';
 
 		try {
-			$sql = 'DELETE FROM tbSupplier
-					WHERE id = :id;';
+			$sql = 'UPDATE tbSupplier 
+							SET active = FALSE
+							WHERE id=:id';
+			// $sql = 'DELETE FROM tbSupplier
+			// 		WHERE id = :id;';
 			$s = $pdo -> prepare($sql);
 			$s -> bindValue(':id', $_POST['id']);
 			$s -> execute();
